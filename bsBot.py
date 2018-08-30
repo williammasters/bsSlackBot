@@ -6,6 +6,7 @@ Created on Mon Jul  9 22:18:12 2018
 @author: wmaste756
 """
 
+import random
 import os
 import time
 import re
@@ -22,7 +23,9 @@ starterbot_id = None
 
 # constants
 RTM_READ_DELAY = 1 # 1 second delay between reading from RTM
-EXAMPLE_COMMAND = "inspire me"
+ORIGINAL_COMMAND = "inspire me"
+VOODO_COMMAND = "share your voodoo wisdom"
+DOWN_COMMAND = "put it down"
 MENTION_REGEX = "^<@(|[WU].+?)>(.*)"
 
 def parse_bot_commands(slack_events):
@@ -52,13 +55,19 @@ def handle_command(command, channel):
         Executes bot command if the command is known
     """
     # Default response is help text for the user
-    default_response = "Not sure what you mean. Try *{}*.".format(EXAMPLE_COMMAND)
+    default_response = "Not sure what you mean. Try *{}*.".format(ORIGINAL_COMMAND)
 
     # Finds and executes the given command, filling in response
     response = None
     # This is where you start to implement more commands!
-    if command.startswith(EXAMPLE_COMMAND):
+    if command.startswith(ORIGINAL_COMMAND):
         response = fake.bs()
+    elif command.startswith(VOODO_COMMAND):
+        response = random.choice(['Achieve ', 'Capture ', 'Execute ', 'Over-deliver ', 'Gain ', 'Earn Wings Via ', 'Consummate ']) + fake.catch_phrase().title() + 's'
+    elif command.startswith(DOWN_COMMAND):
+        resp1, resp2 = "grrrr!", "sorry...*sigh*"
+        resp3, resp4 = "what...me???", "err..., no comeback"
+        response = random.choice([resp1, resp2, resp3, resp4])
 
     # Sends the response back to the channel
     slack_client.api_call(
