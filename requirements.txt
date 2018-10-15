@@ -9,3 +9,4 @@ slackclient==1.2.1
 text-unidecode==1.2
 urllib3==1.23
 websocket-client==0.48.0
+psutil
