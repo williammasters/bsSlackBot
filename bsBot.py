@@ -24,7 +24,6 @@ starterbot_id = None
 RTM_READ_DELAY = 1 # 1 second delay between reading from RTM
 ORIGINAL_COMMAND = "inspire me"
 VOODO_COMMAND = "share your voodoo wisdom"
-DOWN_COMMAND = "put it down"
 MENTION_REGEX = "^<@(|[WU].+?)>(.*)"
 
 def parse_bot_commands(slack_events):
@@ -60,14 +59,13 @@ def handle_command(command, channel):
   response = None
   # This is where you start to implement more commands!
   if command.startswith(ORIGINAL_COMMAND):
-    response = fake.bs()
+    response = random.choice(['You gain success when you +', 'Try to ', 'Always remember to ', 'Businesses are successful when employees ', 'An agile team is able to ']) \
+               + fake.bs()
   elif command.startswith(VOODO_COMMAND):
     response = random.choice(['Achieve ', 'Capture ', 'Execute ', 'Over-deliver ', 'Gain ', 'Earn Wings Via ', 'Consummate ']) + fake.catch_phrase().title() + 's'
-  elif command.startswith(DOWN_COMMAND):
-    resp1, resp2 = "grrrr!", "sorry...*sigh*"
-    resp3, resp4 = "what...me???", "err..., no comeback"
-    response = random.choice([resp1, resp2, resp3, resp4])
-    
+  random_choice = random.randint(1, 5)
+  if random_choice == 1:
+      response = response + '... Betcha you feel way more productive now ;)'
   # Sends the response back to the channel
   if response:
     slack_client.api_call("chat.postMessage", channel=channel, text=response)
