@@ -35,10 +35,11 @@ def parse_bot_commands(slack_events):
     """
     for event in slack_events:
         if event["type"] == "message" and not "subtype" in event:
+            speaker = event["user"]
             user_id, message = parse_direct_mention(event["text"])
             if user_id == starterbot_id:
-                return message, event["channel"]
-    return None, None
+                return message, event["channel"], speaker
+    return None, None, None
 
 
 def parse_direct_mention(message_text):
@@ -51,7 +52,7 @@ def parse_direct_mention(message_text):
     return (matches.group(1), matches.group(2).strip()) if matches else (None, None)
 
 
-def handle_command(command, channel):
+def handle_command(command, channel, speaker):
     """
       Executes bot command if the command is known
     """
@@ -70,6 +71,8 @@ def handle_command(command, channel):
     if random_choice == 1:
         response = response + '... Betcha you feel way more productive now ;)'
     # Sends the response back to the channel
+    if speaker == "W5J6GARJ4" and random_choice == 2:
+        response = "Isn't it your job to inspire us?"
     if response:
         slack_client.api_call("chat.postMessage", channel=channel, text=response)
     else:
@@ -84,7 +87,7 @@ if __name__ == "__main__":
         while True:
             command, channel = parse_bot_commands(slack_client.rtm_read())
             if command:
-                handle_command(command, channel)
+                handle_command(command, channel, speaker)
             time.sleep(RTM_READ_DELAY)
     else:
         print("Connection failed. Exception traceback printed above.")
