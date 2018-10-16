@@ -51,7 +51,7 @@ def handle_command(command, channel, speaker, slack_client):
         response = random.choice(['Achieve ', 'Capture ', 'Execute ', 'Over-deliver ', 'Gain ', 'Earn Wings Via ', 'Consummate ']) + fake.catch_phrase().title() + 's'
     random_choice = random.randint(1, 5)
     if random_choice == 1:
-        response = response + '... Betcha you feel way more productive now ;)'
+        response = response + '... Betcha you feel way more productive now :wink:'
     # Sends the response back to the channel
     if speaker == "W5J6GARJ4" and random_choice == 2:
         response = "Isn't it your job to inspire us?"
