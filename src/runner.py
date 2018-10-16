@@ -7,4 +7,4 @@ for process in psutil.process_iter():
         sys.exit('Process found: exiting.')
 
 print('Process not found: starting it.')
-Popen(['python', '/home/ec2-user/bsSlackBot/bsBot.py'])
+Popen(['python', '/home/ec2-user/bsSlackBot/src/bsBot.py'])
