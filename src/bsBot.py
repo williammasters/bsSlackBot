@@ -7,7 +7,7 @@ Created on Mon Jul 9 22:18:12 2018
 """
 import os
 import time
-import bot_functions.py as bf
+import bot_functions as bf
 from slackclient import SlackClient
 
 # instantiate Slack client
