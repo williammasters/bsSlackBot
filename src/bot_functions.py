@@ -6,6 +6,7 @@ from faker import Faker
 fake = Faker('en_US')
 ORIGINAL_COMMAND = "inspire me"
 VOODO_COMMAND = "share your voodoo wisdom"
+MEANING_COMMAND = "what is the meaning of life?"
 MENTION_REGEX = "^<@(|[WU].+?)>(.*)"
 
 
@@ -53,6 +54,8 @@ def handle_command(command, channel, speaker, slack_client):
     if random_choice == 1:
         response = response + '... Betcha you feel way more productive now :wink:'
     # Sends the response back to the channel
+    if command.startswith(MEANING_COMMAND):
+        response = "Synergy."
     if speaker == "W5J6GARJ4" and random_choice == 2:
         response = "Isn't it your job to inspire us?"
     if response:
