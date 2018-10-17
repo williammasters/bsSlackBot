@@ -1,0 +1,1 @@
+*/5 * * * * /usr/bin/python /home/ec2-user/bsSlackBot/src/runner.py
