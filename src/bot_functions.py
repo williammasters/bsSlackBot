@@ -1,14 +1,17 @@
 import datetime
+import pytz
 import random
 import re
-import pytz
+import string
 from faker import Faker
+import buzzword_library as bz
 
 # instantiate faker
 fake = Faker('en_US')
 ORIGINAL_COMMAND = "inspire me"
 VOODO_COMMAND = "share your voodoo wisdom"
 MEANING_COMMAND = "what is the meaning of life?"
+ANACRONYM_COMMAND = "acronize"
 MENTION_REGEX = "^<@(|[WU].+?)>(.*)"
 
 
@@ -47,6 +50,22 @@ def get_time():
         return 'perfect'
 
 
+def create_acronym(command):
+    """
+
+    :param command:
+    :return: acronym list from last word in command
+    """
+    buzzwords = bz.get_buzzwords()
+    word_to_ancronize = command.split()[-1]
+    word_to_ancronize = "".join((char for char in word_to_ancronize if char not in string.punctuation)).upper()
+    acronym = []
+    for char in word_to_ancronize:
+        temp = filter(lambda x: x.startswith(char), buzzwords)
+        acronym.append(random.choice(temp))
+    return acronym
+
+
 def handle_command(command, channel, speaker, slack_client):
     """
       Executes bot command if the command is known
@@ -54,7 +73,7 @@ def handle_command(command, channel, speaker, slack_client):
     random_choice = random.randint(1, 5)
 
     # Default response is help text for the user
-    default_response = "Not sure what you mean. Try *{}* or *{}*.".format(ORIGINAL_COMMAND, VOODO_COMMAND)
+    default_response = "Not sure what you mean. Try *{}*, *{}*, or *{}*.".format(ORIGINAL_COMMAND, VOODO_COMMAND, ANACRONYM_COMMAND)
 
     # Finds and executes the given command, filling in response
     response = None
@@ -73,7 +92,9 @@ def handle_command(command, channel, speaker, slack_client):
             response = 'sHaRe YoUr VoOdOo WiSdOm :mockingspongebob:'
     elif command.startswith(MEANING_COMMAND):
         response = "Synergy."
-    if random_choice == 1:
+    elif command.startswith(ANACRONYM_COMMAND):
+        response = create_acronym(command)
+    if random_choice == 1 and not command.startswith(ANACRONYM_COMMAND):
         response = response + '... Betcha you feel way more productive now :wink:'
     # Chris easter egg
     if speaker == "W5J6GARJ4" and random_choice == 2:
