@@ -46,7 +46,7 @@ def handle_command(command, channel, speaker, slack_client):
     response = None
     # This is where you start to implement more commands!
     if command.startswith(ORIGINAL_COMMAND):
-        response = random.choice(['You gain success when you +', 'Try to ', 'Always remember to ', 'Businesses are successful when employees ', 'An agile team is able to ']) \
+        response = random.choice(['You gain success when you ', 'Try to ', 'Always remember to ', 'Businesses are successful when employees ', 'An agile team is able to ']) \
                    + fake.bs()
     elif command.startswith(VOODO_COMMAND):
         response = random.choice(['Achieve ', 'Capture ', 'Execute ', 'Over-deliver ', 'Gain ', 'Earn Wings Via ', 'Consummate ']) + fake.catch_phrase().title() + 's'
