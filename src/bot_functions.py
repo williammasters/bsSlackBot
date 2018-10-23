@@ -9,6 +9,7 @@ import buzzword_library as bz
 # instantiate faker
 fake = Faker('en_US')
 ORIGINAL_COMMAND = "inspire me"
+ALTERNATE_COMMAND = "inspire us"
 VOODO_COMMAND = "share your voodoo wisdom"
 MEANING_COMMAND = "what is the meaning of life?"
 ANACRONYM_COMMAND = "acronize"
@@ -70,7 +71,7 @@ def handle_command(command, channel, speaker, slack_client):
     """
       Executes bot command if the command is known
     """
-    random_choice = random.randint(1, 5)
+    random_choice = random.randint(1, 15)
 
     # Default response is help text for the user
     default_response = "Not sure what you mean. Try *{}*, *{}*, or *{}*.".format(ORIGINAL_COMMAND, VOODO_COMMAND, ANACRONYM_COMMAND)
@@ -78,7 +79,7 @@ def handle_command(command, channel, speaker, slack_client):
     # Finds and executes the given command, filling in response
     response = None
 
-    if command.startswith(ORIGINAL_COMMAND):
+    if command.startswith(ORIGINAL_COMMAND) or command.startswith(ALTERNATE_COMMAND):
         response = random.choice(['You gain success when you ', 'Try to ', 'Always remember to ',
                                   'Businesses are successful when employees ', 'An agile team is able to ']) \
                    + fake.bs()

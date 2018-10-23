@@ -4,7 +4,6 @@ import os
 import datetime
 
 
-
 def slackAlert():
     channel = 'CBMQMKXHB'
     # instantiate Slack client
